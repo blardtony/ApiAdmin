@@ -35,6 +35,9 @@ class GameController extends AbstractController
     {
       $game = $this->getDoctrine()->getRepository(Game::class)->find($id);
 
+      if (!$game) {
+        throw $this->createNotFoundException("The game doesn't exist");
+      }
       $editors = [];
 
       $editor = $game->getEditor();
@@ -46,6 +49,7 @@ class GameController extends AbstractController
       $response = [
         'id' => $game->getId(),
         'name' => $game->getName(),
+        'review' => $game->getReview(),
         'editors' => $editors,
       ];
 

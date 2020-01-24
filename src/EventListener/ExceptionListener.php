@@ -18,7 +18,7 @@ class ExceptionListener
     $exception = $event->getThrowable();
     if ($exception instanceof HttpExceptionInterface) {
       $message = $exception->getMessage();
-
+      
       if ($exception->getPrevious() instanceof ResourceNotFoundException) {
         $message = "The requested URL was not found on the server";
       }
