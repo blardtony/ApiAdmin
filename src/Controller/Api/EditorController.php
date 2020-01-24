@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+
 use App\Entity\Editor;
 
 class EditorController extends AbstractController
@@ -15,6 +16,15 @@ class EditorController extends AbstractController
     {
       $editors = $this->getDoctrine()->getRepository(Editor::class)->findAll();
 
-      return $this->json($editors);
+      $response = [];
+
+      foreach ($editors as $editor) {
+        $response[] = [
+          'id' => $editor->getId(),
+          'name' => $editor->getName(),
+        ];
+      }
+
+      return $this->json($response);
     }
 }
