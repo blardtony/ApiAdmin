@@ -13,9 +13,8 @@ class EditorController extends AbstractController
      */
     public function index()
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/Api/EditorController.php',
-        ]);
+      $editors = $this->getDoctrine()->getRepository(Editor::class)->findAll();
+
+      return $this->json($editors);
     }
 }
