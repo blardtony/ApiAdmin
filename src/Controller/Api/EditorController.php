@@ -12,7 +12,7 @@ class EditorController extends AbstractController
     /**
      * @Route("/editor", name="editor")
      */
-    public function index()
+    public function showAllEditor()
     {
       $editors = $this->getDoctrine()->getRepository(Editor::class)->findAll();
 
@@ -24,6 +24,32 @@ class EditorController extends AbstractController
           'name' => $editor->getName(),
         ];
       }
+
+      return $this->json($response);
+    }
+
+    /**
+     * @Route("/editor/{id}", name="editor_detail", requirements={"id"="\d+"})
+     */
+    public function showOneEditor(int $id)
+    {
+      $editor = $this->getDoctrine()->getRepository(Editor::class)->find($id);
+
+      $games = [];
+
+      foreach ($editor->getGames() as $game) {
+        $games[] = [
+          'id' => $game->getId(),
+          'name' => $game->getName(),
+        ];
+      }
+
+      $response = [
+        'id' => $editor->getId(),
+        'name' => $editor->getName(),
+        'games' => $games,
+      ];
+
 
       return $this->json($response);
     }
